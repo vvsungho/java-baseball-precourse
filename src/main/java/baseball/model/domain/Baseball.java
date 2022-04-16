@@ -1,4 +1,4 @@
-package baseball.domain;
+package baseball.model.domain;
 
 public class Baseball {
     private int ballCount;
