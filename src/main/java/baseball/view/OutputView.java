@@ -1,4 +1,4 @@
-package baseball.model.view;
+package baseball.view;
 
 import baseball.constant.Constant;
 import baseball.model.domain.Baseball;
