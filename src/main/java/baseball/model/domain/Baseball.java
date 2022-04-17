@@ -4,7 +4,16 @@ public class Baseball {
     private int ballCount;
     private int strikeCount;
     private boolean isNothing;
+    private boolean isStart;
     private boolean isSuccess;
+
+    public Baseball(int ballCount, int strikeCount, boolean isNothing, boolean isStart, boolean isSuccess) {
+        this.ballCount = ballCount;
+        this.strikeCount = strikeCount;
+        this.isNothing = isNothing;
+        this.isStart = isStart;
+        this.isSuccess = isSuccess;
+    }
 
     public Baseball(int ballCount, int strikeCount, boolean isNothing, boolean isSuccess) {
         this.ballCount = ballCount;
@@ -23,6 +32,10 @@ public class Baseball {
 
     public boolean isNothing() {
         return isNothing;
+    }
+
+    public boolean isStart() {
+        return isStart;
     }
 
     public boolean isSuccess() {

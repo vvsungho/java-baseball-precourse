@@ -1,13 +1,113 @@
 package baseball.controller;
 
 import baseball.config.AppConfig;
+import baseball.constant.Constant;
+import baseball.model.domain.Baseball;
+import baseball.model.domain.Number;
+import baseball.model.service.CommonService;
 import baseball.model.service.GameService;
+import baseball.view.InputView;
+import baseball.view.OutputView;
 
 public class GameController {
-    public void play() {
-        AppConfig appConfig = new AppConfig();
-        GameService gameService = appConfig.baseballService();
+    private Baseball baseball;
+    private Number number;
+    private GameService gameService;
+    private CommonService commonService;
 
-        gameService.startGame();
+    public GameController(CommonService commonService) {
+        this.commonService = commonService;
+    }
+
+    public void play() {
+        initConfig();
+        initGame();
+        while (baseball.isStart()) {
+            startGame();
+            checkRestartGame();
+        }
+    }
+
+    private void startGame() {
+        while (!baseball.isSuccess()) {
+            gameService.isValidPlayGameNumber(number.getUserNumber());
+            baseball = gameService.getResult(number.getUserNumber(), number.getRandomNumber());
+
+            printResult();
+        }
+    }
+
+    private void initConfig() {
+        AppConfig appConfig = new AppConfig();
+        gameService = appConfig.baseballService();
+        commonService = appConfig.commonService();
+    }
+
+    private void initGame() {
+        baseball = new Baseball(0, 0, false, true, false);
+        number = new Number(InputView.printInputNumber(), commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE));
+    }
+
+    private void printResult() {
+        printBall();
+        printStrike();
+        printSpacing();
+        printBallCount();
+        printStrikeCount();
+        printNothing();
+        printEndGame();
+    }
+
+    private void checkRestartGame() {
+        InputView.printRestart();
+        String str = commonService.getReadLine();
+        gameService.isValidRestartGameNumber(str);
+
+        boolean isStart = str.equals(Constant.RESTART_GAME_VALUE);
+        if (isStart) {
+            this.initGame();
+        }
+    }
+
+    private void printBall() {
+        if (baseball.getBallCount() > 0) {
+            OutputView.printBall();
+        }
+    }
+
+    private void printStrike() {
+        if (baseball.getStrikeCount() > 0) {
+            OutputView.printStrike();
+        }
+    }
+
+    private void printSpacing() {
+        if (baseball.getBallCount() > 0 && baseball.getStrikeCount() > 0) {
+            OutputView.printSpacing();
+        }
+    }
+
+    private void printBallCount() {
+        if (baseball.getBallCount() > 0) {
+            OutputView.printCount(baseball.getBallCount());
+        }
+    }
+
+    private void printStrikeCount() {
+        if (baseball.getStrikeCount() > 0) {
+            OutputView.printCount(baseball.getStrikeCount());
+        }
+    }
+
+    private void printNothing() {
+        if (baseball.getBallCount() == 0 && baseball.getStrikeCount() == 0) {
+            OutputView.printNothing();
+        }
+    }
+
+    private void printEndGame() {
+        if (baseball.isSuccess()) {
+            OutputView.printEndGame();
+        }
     }
 }

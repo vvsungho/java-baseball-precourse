@@ -2,92 +2,52 @@ package baseball.model.service;
 
 import baseball.constant.Constant;
 import baseball.model.domain.Baseball;
-import baseball.view.InputView;
-import baseball.view.OutputView;
-
 import java.util.HashSet;
 import java.util.Set;
 
 public class GameServiceImpl implements GameService {
     private final CommonService commonService;
-    private boolean isStart = false;
-    private boolean isSuccess = false;
 
     public GameServiceImpl(CommonService commonService) {
         this.commonService = commonService;
     }
 
     @Override
-    public void startGame() {
-        prepareGame();
-        while (isStart) {
-            playGame();
-        }
-    }
-
-    @Override
     public boolean isValidPlayGameNumber(String str) {
-        if (!isValidNumber(str)) {
-            return false;
-        }
+        isValidNumber(str);
 
         if (str.contains(Constant.NOT_ALLOW_NUMBER_VALUE)) {
-            InputView.printInputNumberCondition();
-            return false;
+            throw new IllegalArgumentException();
         }
 
         if (str.length() != Constant.NUMBER_LENGTH_VALUE) {
-            InputView.printInvalidInputLength();
-            return false;
+            throw new IllegalArgumentException();
         }
 
         if (isDuplicateNumber(str)) {
-            InputView.printInputDuplication();
-            return false;
+            throw new IllegalArgumentException();
         }
 
         return true;
     }
-
-    private void playGame() {
-        this.isSuccess = false;
-        String givenNumber = commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE);
-
-        while (!isSuccess) {
-            InputView.printInputNumber();
-            String userNumber = commonService.getReadLine();
-            if(isValidPlayGameNumber(userNumber)) {
-                throw new IllegalArgumentException(Constant.INVALID_INPUT_MESSAGE);
-            }
-
-            Baseball baseball = getResult(userNumber, givenNumber);
-            isSuccess = baseball.isSuccess();
-
-            if (isSuccess) {
-                OutputView.printEndGame();
-            }
-        }
-
-        checkRestartGame();
-    }
-
-    private boolean isValidRestartGameNumber(String str) {
+    @Override
+    public boolean isValidRestartGameNumber(String str) {
         if (!(str.equals(Constant.RESTART_GAME_VALUE) || str.equals(Constant.END_GAME_VALUE))) {
-            return false;
+            throw new IllegalArgumentException(Constant.INVALID_INPUT_MESSAGE);
         }
         return true;
     }
 
     private boolean isValidNumber(String str) {
-        if (isEmpty(str)) {
-            InputView.printInputNumber();
+        if (commonService.isEmpty(str)) {
+        //            InputView.printInputNumber();
             return false;
         }
 
         try {
             Integer.parseInt(str);
         } catch (NumberFormatException ne) {
-            InputView.printInvalidInput();
+        //            InputView.printInvalidInput();
             return false;
         }
 
@@ -100,10 +60,6 @@ public class GameServiceImpl implements GameService {
             uniqueNumbers.add(Character.getNumericValue(str.charAt(i)));
         }
         return str.length() != uniqueNumbers.size();
-    }
-
-    private void prepareGame() {
-        this.isStart = true;
     }
 
     private int countBall(String userNumber, String givenNumber) {
@@ -135,22 +91,6 @@ public class GameServiceImpl implements GameService {
         int ballCount = countBall(userNumber, givenNumber);
         int strikeCount = countStrike(userNumber, givenNumber);
 
-        Baseball baseball = new Baseball(ballCount, strikeCount, ballCount == 0 && strikeCount == 0, strikeCount == Constant.NUMBER_LENGTH_VALUE);
-        OutputView.printResult(baseball);
-
-        return baseball;
-    }
-
-    private boolean isEmpty(String str) {
-        return str == null || str.equals("");
-    }
-
-    private void checkRestartGame() {
-        InputView.printRestart();
-        String str = commonService.getReadLine();
-        if (isValidRestartGameNumber(str)) {
-            throw new IllegalArgumentException(Constant.INVALID_INPUT_MESSAGE);
-        }
-        this.isStart = str.equals(Constant.RESTART_GAME_VALUE);
+        return new Baseball(ballCount, strikeCount, ballCount == 0 && strikeCount == 0, strikeCount == Constant.NUMBER_LENGTH_VALUE);
     }
 }

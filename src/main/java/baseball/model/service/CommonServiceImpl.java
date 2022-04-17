@@ -33,6 +33,10 @@ public class CommonServiceImpl implements CommonService {
         }
         return uniqueNumbers;
     }
+    @Override
+    public boolean isEmpty(String str) {
+        return str == null || str.equals("");
+    }
 
     private int getRandomNumber() {
         return Randoms.pickNumberInRange(Constant.MIN_VALUE, Constant.MAX_VALUE);
