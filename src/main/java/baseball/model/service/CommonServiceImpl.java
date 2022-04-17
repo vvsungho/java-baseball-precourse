@@ -3,7 +3,6 @@ package baseball.model.service;
 import baseball.constant.Constant;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
-
 import java.util.HashSet;
 import java.util.Set;
 
