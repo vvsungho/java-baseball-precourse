@@ -13,45 +13,63 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public boolean isValidPlayGameNumber(String str) {
-        isValidNumber(str);
+    public Baseball getResult(String userNumber, String givenNumber) {
+        int ballCount = countBall(userNumber, givenNumber);
+        int strikeCount = countStrike(userNumber, givenNumber);
 
-        if (str.contains(Constant.NOT_ALLOW_NUMBER_VALUE)) {
-            throw new IllegalArgumentException();
-        }
-
-        if (str.length() != Constant.NUMBER_LENGTH_VALUE) {
-            throw new IllegalArgumentException();
-        }
-
-        if (isDuplicateNumber(str)) {
-            throw new IllegalArgumentException();
-        }
-
-        return true;
+        return new Baseball(ballCount, strikeCount, ballCount == 0 && strikeCount == 0, strikeCount == Constant.NUMBER_LENGTH_VALUE);
     }
+
     @Override
-    public boolean isValidRestartGameNumber(String str) {
+    public void validatePlayGameNumber(String str) {
+        validateNumber(str);
+        validateAllowValue(str);
+        validateNumberLength(str);
+        validateDuplicateNumber(str);
+    }
+
+    @Override
+    public void validateRestartGameNumber(String str) {
         if (!(str.equals(Constant.RESTART_GAME_VALUE) || str.equals(Constant.END_GAME_VALUE))) {
             throw new IllegalArgumentException(Constant.INVALID_INPUT_MESSAGE);
         }
-        return true;
     }
 
-    private boolean isValidNumber(String str) {
-        if (commonService.isEmpty(str)) {
-        //            InputView.printInputNumber();
-            return false;
-        }
+    private void validateNumber(String str) {
+        validateEmptyValue(str);
+        validateNumberValue(str);
+    }
 
+    private void validateEmptyValue(String str) {
+        if (commonService.isEmpty(str)) {
+            throw new IllegalArgumentException(Constant.INVALID_INPUT_MESSAGE);
+        }
+    }
+
+    private void validateNumberValue(String str) {
         try {
             Integer.parseInt(str);
         } catch (NumberFormatException ne) {
-        //            InputView.printInvalidInput();
-            return false;
+            throw new IllegalArgumentException(Constant.INVALID_INPUT_MESSAGE);
         }
+    }
 
-        return true;
+    private void validateAllowValue(String str) {
+        if (str.contains(Constant.NOT_ALLOW_NUMBER_VALUE)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateNumberLength(String str) {
+        if (str.length() != Constant.NUMBER_LENGTH_VALUE) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void validateDuplicateNumber(String str) {
+        if (isDuplicateNumber(str)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private boolean isDuplicateNumber(String str) {
@@ -84,13 +102,5 @@ public class GameServiceImpl implements GameService {
 
     private int checkContainNumberAndSameLocation(char number1, char number2) {
         return number1 == number2 ? 1 : 0;
-    }
-
-    @Override
-    public Baseball getResult(String userNumber, String givenNumber) {
-        int ballCount = countBall(userNumber, givenNumber);
-        int strikeCount = countStrike(userNumber, givenNumber);
-
-        return new Baseball(ballCount, strikeCount, ballCount == 0 && strikeCount == 0, strikeCount == Constant.NUMBER_LENGTH_VALUE);
     }
 }

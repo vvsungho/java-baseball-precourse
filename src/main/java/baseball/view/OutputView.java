@@ -1,7 +1,6 @@
 package baseball.view;
 
 import baseball.constant.Constant;
-import baseball.model.domain.Baseball;
 
 public class OutputView {
     public static String printEndGame() {

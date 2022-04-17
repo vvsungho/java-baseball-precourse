@@ -9,6 +9,10 @@ public class Number {
         this.randomNumber = randomNumber;
     }
 
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
+    }
+
     public String getUserNumber() {
         return userNumber;
     }

@@ -15,10 +15,6 @@ public class GameController {
     private GameService gameService;
     private CommonService commonService;
 
-    public GameController(CommonService commonService) {
-        this.commonService = commonService;
-    }
-
     public void play() {
         initConfig();
         initGame();
@@ -30,7 +26,8 @@ public class GameController {
 
     private void startGame() {
         while (!baseball.isSuccess()) {
-            gameService.isValidPlayGameNumber(number.getUserNumber());
+            number.setUserNumber(InputView.printInputNumber());
+            gameService.validatePlayGameNumber(number.getUserNumber());
             baseball = gameService.getResult(number.getUserNumber(), number.getRandomNumber());
 
             printResult();
@@ -45,15 +42,15 @@ public class GameController {
 
     private void initGame() {
         baseball = new Baseball(0, 0, false, true, false);
-        number = new Number(InputView.printInputNumber(), commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE));
+        number = new Number(null, commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE));
     }
 
     private void printResult() {
-        printBall();
-        printStrike();
-        printSpacing();
         printBallCount();
+        printBall();
+        printSpacing();
         printStrikeCount();
+        printStrike();
         printNothing();
         printEndGame();
     }
@@ -61,7 +58,7 @@ public class GameController {
     private void checkRestartGame() {
         InputView.printRestart();
         String str = commonService.getReadLine();
-        gameService.isValidRestartGameNumber(str);
+        gameService.validateRestartGameNumber(str);
 
         boolean isStart = str.equals(Constant.RESTART_GAME_VALUE);
         if (isStart) {
