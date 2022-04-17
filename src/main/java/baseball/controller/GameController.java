@@ -3,6 +3,7 @@ package baseball.controller;
 import baseball.config.AppConfig;
 import baseball.constant.Constant;
 import baseball.model.domain.Baseball;
+import baseball.model.domain.BaseballMessage;
 import baseball.model.domain.Number;
 import baseball.model.service.CommonService;
 import baseball.model.service.GameService;
@@ -30,7 +31,8 @@ public class GameController {
             gameService.validatePlayGameNumber(number.getUserNumber());
             baseball = gameService.getResult(number.getUserNumber(), number.getRandomNumber());
 
-            printResult();
+            BaseballMessage baseballMessage = new BaseballMessage(baseball);
+            printResult(baseballMessage);
         }
     }
 
@@ -45,14 +47,8 @@ public class GameController {
         number = new Number(null, commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE));
     }
 
-    private void printResult() {
-        printBallCount();
-        printBall();
-        printSpacing();
-        printStrikeCount();
-        printStrike();
-        printNothing();
-        printEndGame();
+    private void printResult(BaseballMessage baseballMessage) {
+        printGameResult(baseballMessage.getGameResultMessage());
     }
 
     private void checkRestartGame() {
@@ -106,5 +102,9 @@ public class GameController {
         if (baseball.isSuccess()) {
             OutputView.printEndGame();
         }
+    }
+
+    private void printGameResult(String message) {
+        OutputView.printGameResult(message);
     }
 }

@@ -1,5 +1,7 @@
 package baseball.model.domain;
 
+import baseball.constant.Constant;
+
 public class Baseball {
     private int ballCount;
     private int strikeCount;
@@ -40,5 +42,55 @@ public class Baseball {
 
     public boolean isSuccess() {
         return isSuccess;
+    }
+
+    public class Result {
+        private StringBuilder message;
+
+        public void setMessage() {
+            message = new StringBuilder();
+            getBallCountMessage();
+            getBallMessage();
+            getSpacingMessage();
+            getStrikeCountMessage();
+            getStrikeMessage();
+            getNothingMessage();
+        }
+
+        private void getBallMessage() {
+            if (getBallCount() > 0) {
+                message.append(Constant.BALL);
+            }
+        }
+
+        private void getStrikeMessage() {
+            if (getStrikeCount() > 0) {
+                message.append(Constant.STRIKE);
+            }
+        }
+
+        private void getSpacingMessage() {
+            if (getBallCount() > 0 && getStrikeCount() > 0) {
+                message.append(Constant.SPACING);
+            }
+        }
+
+        private void getBallCountMessage() {
+            if (getBallCount() > 0) {
+                message.append(getBallCount());
+            }
+        }
+
+        private void getStrikeCountMessage() {
+            if (getStrikeCount() > 0) {
+                message.append(getStrikeCount());
+            }
+        }
+
+        private void getNothingMessage() {
+            if (getBallCount() == 0 && getStrikeCount() == 0) {
+                message.append(Constant.NOTHING);
+            }
+        }
     }
 }
