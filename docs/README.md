@@ -66,9 +66,9 @@
 
 ## 확인사항
 - MVC 패턴을 준수하는지 확인
-  - [x] Model은 Controller와  View에 의존하지 않는다.
-  - [x] View는 Model에만 의존한다. View가 Model로부터 데이터를 받을 때 반드시 Controller에서 받아야 한다.
-  - [x] Controller는 Model과 View에 의존해도 된다.
+  - [x] ~~Model은 Controller와  View에 의존하지 않는다.~~
+  - [x] ~~View는 Model에만 의존한다. View가 Model로부터 데이터를 받을 때 반드시 Controller에서 받아야 한다.~~
+  - [x] ~~Controller는 Model과 View에 의존해도 된다.~~
 
 - 함수의 역할이 한 가지 역할만 수행하는지 확인
 
@@ -76,7 +76,7 @@
 ## TODO
 - [x] ~~MVC 패턴을 준수하도록 수정 필요. (확인사항 참조)~~
 - [x] ~~함수가 한 가지 역할만 하도록 수정 필요.~~
-- [x] 테스트케이스 작성
+- [x] ~~테스트케이스 작성~~
   
 
 
