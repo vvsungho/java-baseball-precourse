@@ -15,6 +15,10 @@ public class BaseballMessage {
         getNothingMessage(baseball);
     }
 
+    public String getGameResultMessage() {
+        return message.toString();
+    }
+
     private void getBallMessage(Baseball baseball) {
         if (baseball.getBallCount() > 0) {
             message.append(Constant.BALL);
@@ -49,9 +53,5 @@ public class BaseballMessage {
         if (baseball.getBallCount() == 0 && baseball.getStrikeCount() == 0) {
             message.append(Constant.NOTHING);
         }
-    }
-
-    public String getGameResultMessage() {
-        return message.toString();
     }
 }
