@@ -24,12 +24,10 @@ public class GameServiceTest {
     @DisplayName("야구게임 입력 값 예외 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"2579", "abc", "ABC", "1A3B5", "123A", "*23", "1ㅇ3"})
-    public void isValidPlayGameNumberTest(String input) {
+    public void validatePlayGameNumberTest(String input) {
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> {
-                    gameService.validatePlayGameNumber(input);
-                }
+                () -> gameService.validatePlayGameNumber(input)
         );
     }
 
@@ -44,4 +42,13 @@ public class GameServiceTest {
         assertEquals(expected, result);
     }
 
+    @DisplayName("야구게임 재시작 입력 값 예외 테스트")
+    @ParameterizedTest
+    @ValueSource(strings = {"3", "r", "A", "0"})
+    public void validateReStartGameNumberTest(String input) {
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> gameService.validateRestartGameNumber(input)
+        );
+    }
 }
