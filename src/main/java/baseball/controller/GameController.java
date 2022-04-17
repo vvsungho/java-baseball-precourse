@@ -49,6 +49,7 @@ public class GameController {
 
     private void printResult(BaseballMessage baseballMessage) {
         printGameResult(baseballMessage.getGameResultMessage());
+        printEndGame();
     }
 
     private void checkRestartGame() {
@@ -62,49 +63,13 @@ public class GameController {
         }
     }
 
-    private void printBall() {
-        if (baseball.getBallCount() > 0) {
-            OutputView.printBall();
-        }
-    }
-
-    private void printStrike() {
-        if (baseball.getStrikeCount() > 0) {
-            OutputView.printStrike();
-        }
-    }
-
-    private void printSpacing() {
-        if (baseball.getBallCount() > 0 && baseball.getStrikeCount() > 0) {
-            OutputView.printSpacing();
-        }
-    }
-
-    private void printBallCount() {
-        if (baseball.getBallCount() > 0) {
-            OutputView.printCount(baseball.getBallCount());
-        }
-    }
-
-    private void printStrikeCount() {
-        if (baseball.getStrikeCount() > 0) {
-            OutputView.printCount(baseball.getStrikeCount());
-        }
-    }
-
-    private void printNothing() {
-        if (baseball.getBallCount() == 0 && baseball.getStrikeCount() == 0) {
-            OutputView.printNothing();
-        }
+    private void printGameResult(String message) {
+        OutputView.printGameResult(message);
     }
 
     private void printEndGame() {
         if (baseball.isSuccess()) {
             OutputView.printEndGame();
         }
-    }
-
-    private void printGameResult(String message) {
-        OutputView.printGameResult(message);
     }
 }
