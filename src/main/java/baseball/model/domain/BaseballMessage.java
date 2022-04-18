@@ -50,7 +50,7 @@ public class BaseballMessage {
     }
 
     private void getNothingMessage(Baseball baseball) {
-        if (baseball.getBallCount() == 0 && baseball.getStrikeCount() == 0) {
+        if (baseball.isNothing()) {
             message.append(Constant.NOTHING);
         }
     }

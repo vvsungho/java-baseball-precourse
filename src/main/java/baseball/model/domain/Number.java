@@ -4,6 +4,10 @@ public class Number {
     private String userNumber;
     private String randomNumber;
 
+    public static Number initializeNumber(String randomNumber) {
+        return new Number(null, randomNumber);
+    }
+
     public Number(String userNumber, String randomNumber) {
         this.userNumber = userNumber;
         this.randomNumber = randomNumber;

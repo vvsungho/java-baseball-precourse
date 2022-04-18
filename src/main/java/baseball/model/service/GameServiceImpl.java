@@ -17,7 +17,7 @@ public class GameServiceImpl implements GameService {
         int ballCount = countBall(userNumber, givenNumber);
         int strikeCount = countStrike(userNumber, givenNumber);
 
-        return new Baseball(ballCount, strikeCount, ballCount == 0 && strikeCount == 0, strikeCount == Constant.NUMBER_LENGTH_VALUE);
+        return Baseball.createBaseballResult(ballCount, strikeCount);
     }
 
     @Override

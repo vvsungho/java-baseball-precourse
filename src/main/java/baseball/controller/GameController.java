@@ -43,8 +43,8 @@ public class GameController {
     }
 
     private void initGame() {
-        baseball = new Baseball(0, 0, false, true, false);
-        number = new Number(null, commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE));
+        baseball = Baseball.initializeBaseball();
+        number = Number.initializeNumber(commonService.getGameRandomNumber(Constant.NUMBER_LENGTH_VALUE));
     }
 
     private void printResult(BaseballMessage baseballMessage) {

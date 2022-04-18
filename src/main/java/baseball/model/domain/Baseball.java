@@ -9,6 +9,15 @@ public class Baseball {
     private boolean isStart;
     private boolean isSuccess;
 
+
+    public static Baseball initializeBaseball() {
+        return new Baseball(0, 0, false, true, false);
+    }
+
+    public static Baseball createBaseballResult(int ballCount, int strikeCount) {
+        return new Baseball(ballCount, strikeCount, ballCount == 0 && strikeCount == 0, strikeCount == Constant.ANSWER_VALUE);
+    }
+
     public Baseball(int ballCount, int strikeCount, boolean isNothing, boolean isStart, boolean isSuccess) {
         this.ballCount = ballCount;
         this.strikeCount = strikeCount;
@@ -42,55 +51,5 @@ public class Baseball {
 
     public boolean isSuccess() {
         return isSuccess;
-    }
-
-    public class Result {
-        private StringBuilder message;
-
-        public void setMessage() {
-            message = new StringBuilder();
-            getBallCountMessage();
-            getBallMessage();
-            getSpacingMessage();
-            getStrikeCountMessage();
-            getStrikeMessage();
-            getNothingMessage();
-        }
-
-        private void getBallMessage() {
-            if (getBallCount() > 0) {
-                message.append(Constant.BALL);
-            }
-        }
-
-        private void getStrikeMessage() {
-            if (getStrikeCount() > 0) {
-                message.append(Constant.STRIKE);
-            }
-        }
-
-        private void getSpacingMessage() {
-            if (getBallCount() > 0 && getStrikeCount() > 0) {
-                message.append(Constant.SPACING);
-            }
-        }
-
-        private void getBallCountMessage() {
-            if (getBallCount() > 0) {
-                message.append(getBallCount());
-            }
-        }
-
-        private void getStrikeCountMessage() {
-            if (getStrikeCount() > 0) {
-                message.append(getStrikeCount());
-            }
-        }
-
-        private void getNothingMessage() {
-            if (getBallCount() == 0 && getStrikeCount() == 0) {
-                message.append(Constant.NOTHING);
-            }
-        }
     }
 }
