@@ -27,7 +27,8 @@ public class GameController {
 
     private void startGame() {
         while (!baseball.isSuccess()) {
-            number.setUserNumber(InputView.printInputNumber());
+            InputView.printInputNumber();
+            number.setUserNumber(commonService.getReadLine());
             gameService.validatePlayGameNumber(number.getUserNumber());
             baseball = gameService.getResult(number.getUserNumber(), number.getRandomNumber());
 
